@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>icons/kraken/20x20/menu.png</file>
+        <file>icons/kraken/20x20@2/menu.png</file>
+        <file>icons/kraken/20x20@3/menu.png</file>
+        <file>icons/kraken/20x20@4/menu.png</file>
+        <file>icons/kraken/index.theme</file>
+    </qresource>
+</RCC>
