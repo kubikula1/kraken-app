@@ -7,5 +7,11 @@
         <file>icons/kraken/20x20@3/menu.png</file>
         <file>icons/kraken/20x20@4/menu.png</file>
         <file>icons/kraken/index.theme</file>
+        <file>icons/kraken/20x20/drawer.png</file>
+        <file>icons/kraken/20x20@2/drawer.png</file>
+        <file>icons/kraken/20x20@3/drawer.png</file>
+        <file>icons/kraken/20x20@4/drawer.png</file>
+        <file>SettingsPage.qml</file>
+        <file>MarketPage.qml</file>
     </qresource>
 </RCC>

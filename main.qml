@@ -13,14 +13,22 @@ ApplicationWindow {
     height: 520
     title: qsTr("Kraken")
 
+    // hlavicka
     header: ToolBar {
         RowLayout {
             anchors.fill: parent
             spacing:20
 
+            ToolButton {
+                icon.name: "drawer"
+                onClicked: {
+                    drawer.open()
+                }
+            }
+
             Label {
                 id: titleLabel
-                text: "Nadpis"
+                text: listView.currentItem.text
                 font.pixelSize: 20
                 elide: Label.ElideRight
                 horizontalAlignment: Qt.AlignHCenter
@@ -43,6 +51,46 @@ ApplicationWindow {
                     }
                 }
             }
+        }
+    }
+
+    StackView {
+        id: stackView
+        anchors.fill: parent
+        initialItem: "qrc:/MarketPage.qml"
+    }
+
+    // vyijizdeci menu
+    Drawer {
+        id: drawer
+        width: Math.min(mainWindow.width, mainWindow.height) / 3 * 2
+        height: mainWindow.height
+
+        ListView {
+            id: listView
+
+            focus: true
+            currentIndex: 0
+            anchors.fill: parent
+
+            delegate: ItemDelegate {
+                width: parent.width
+                text: model.title
+                highlighted: ListView.isCurrentItem
+                onClicked: {
+                    listView.currentIndex = index
+                    stackView.push(model.source)
+                    drawer.close()
+                }
+            }
+
+            model: ListModel {
+                ListElement { title: "Market"; source: "qrc:/MarketPage.qml" }
+                ListElement { title: "Nastavení"; source: "qrc:/SettingsPage.qml" }
+
+            }
+
+            ScrollIndicator.vertical: ScrollIndicator { }
         }
     }
 
