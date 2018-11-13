@@ -6,29 +6,44 @@ import QtQuick.Controls.Material 2.1
 import QtQuick.Controls.Universal 2.1
 import Qt.labs.settings 1.0
 
+
 ApplicationWindow {
     visible: true
     id: mainWindow
     width: 360
     height: 520
-    title: qsTr("Kraken")
+    property string tit: "Market"
 
-    // hlavicka
+    Shortcut {
+        sequences: ["Esc", "Back"]
+        enabled: stackView.depth > 1
+        onActivated: {
+            stackView.pop()
+        }
+    }
+
+    property var delegateComponentMap: {
+        "StyleDelegate": itemDelegateSetting,
+    }
+
     header: ToolBar {
+
         RowLayout {
             anchors.fill: parent
             spacing:20
 
             ToolButton {
-                icon.name: "drawer"
+                icon.name: "back"
+                opacity: stackView.depth > 1 ? 1 : 0
                 onClicked: {
-                    drawer.open()
+                    stackView.pop()
+                    mainWindow.tit = view.currentItem.tit
                 }
             }
 
             Label {
                 id: titleLabel
-                text: listView.currentItem.text
+                text: mainWindow.tit
                 font.pixelSize: 20
                 elide: Label.ElideRight
                 horizontalAlignment: Qt.AlignHCenter
@@ -36,9 +51,13 @@ ApplicationWindow {
                 Layout.fillWidth: true
             }
 
+
+
             ToolButton {
                 icon.name: "menu"
-                onClicked: optionsMenu.open()
+                onClicked: {
+                    optionsMenu.open()
+                }
 
                 Menu {
                     id: optionsMenu
@@ -57,42 +76,87 @@ ApplicationWindow {
     StackView {
         id: stackView
         anchors.fill: parent
-        initialItem: "qrc:/MarketPage.qml"
-    }
+        focus: true
+        Keys.onReleased: if (event.key === Qt.Key_Back && stackView.depth > 1) {
+                             stackView.pop();
+                             event.accepted = true;
+                         }
+        initialItem: Item {
 
-    // vyijizdeci menu
-    Drawer {
-        id: drawer
-        width: Math.min(mainWindow.width, mainWindow.height) / 3 * 2
-        height: mainWindow.height
+            SwipeView {
+                id: view
+                currentIndex: 0
+                anchors.fill: parent
 
-        ListView {
-            id: listView
+                onCurrentIndexChanged: {
+                    mainWindow.tit = currentItem.tit
+                }
 
-            focus: true
-            currentIndex: 0
-            anchors.fill: parent
+                Item {
+                    id: marketPage
+                    property string tit: "Market"
 
-            delegate: ItemDelegate {
-                width: parent.width
-                text: model.title
-                highlighted: ListView.isCurrentItem
-                onClicked: {
-                    listView.currentIndex = index
-                    stackView.push(model.source)
-                    drawer.close()
+                    Label {
+                        id: xxx
+                        text: "Market"
+                        font.pixelSize: 20
+                        elide: Label.ElideRight
+
+                        horizontalAlignment: Qt.AlignHCenter
+                        verticalAlignment: Qt.AlignVCenter
+                        Layout.fillWidth: true
+                    }
+                }
+
+                Item {
+                    id: settingPage
+                    property string tit: "Settings"
+
+
+                    ListView {
+                        id: list
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+
+                        model: ListModel {
+                            ListElement { title: "Change style"; type: "StyleDelegate"; txt: "Style"; source:"qrc:/styleSettingPage.qml" }
+                            ListElement { title: "Change refresh"; type: "StyleDelegate"; txt: "Refresh value"; source: "qrc:/refrestSettingPage.qml" }
+                        }
+
+                        anchors.fill: parent
+                        delegate: Component {
+                            id: itemDelegateSetting
+                            ItemDelegate {
+                                text: txt
+                                width: parent.width
+                                MouseArea {
+                                    anchors.fill: parent
+                                        onClicked:{
+                                            stackView.push(model.source)
+                                            mainWindow.tit = model.title
+                                        }
+                                }
+                                Image {
+                                    anchors.right: parent.right
+                                    anchors.rightMargin: 15
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    source: "qrc:/icons/kraken/20x20/next.png"
+                                }
+                            }
+                        }
+                     }
                 }
             }
-
-            model: ListModel {
-                ListElement { title: "Market"; source: "qrc:/MarketPage.qml" }
-                ListElement { title: "Nastavení"; source: "qrc:/SettingsPage.qml" }
-
+            PageIndicator {
+                id: indicator
+                count: view.count
+                currentIndex: view.currentIndex
+                anchors.bottom: view.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
             }
-
-            ScrollIndicator.vertical: ScrollIndicator { }
         }
     }
+
 
     Dialog {
         id: aboutDialog
