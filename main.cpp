@@ -5,6 +5,7 @@
 #include <QQuickStyle>
 #include <QIcon>
 #include <QDebug>
+#include <QSslSocket>
 
 int main(int argc, char *argv[])
 {

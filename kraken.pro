@@ -17,6 +17,10 @@ SOURCES += main.cpp
 
 RESOURCES += qml.qrc
 
+#LIBS += /home/kubikula/Skola/FAI/3.semestr/ABMTE/kraken-app/android/libssl.a
+#LIBS += /home/kubikula/Skola/FAI/3.semestr/ABMTE/kraken-app/android/libcrypto.a
+
+
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
@@ -28,4 +32,19 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES +=
+DISTFILES += \
+    android/AndroidManifest.xml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
+contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
+    ANDROID_EXTRA_LIBS = \
+        /home/kubikula/Skola/FAI/3.semestr/ABMTE/kraken-app/android/libcrypto.so \
+        $$PWD/android/libssl.so
+}

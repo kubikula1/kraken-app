@@ -2,25 +2,15 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
-        <file>icons/kraken/20x20/menu.png</file>
-        <file>icons/kraken/20x20@2/menu.png</file>
-        <file>icons/kraken/20x20@3/menu.png</file>
-        <file>icons/kraken/20x20@4/menu.png</file>
         <file>icons/kraken/index.theme</file>
-        <file>icons/kraken/20x20/drawer.png</file>
-        <file>icons/kraken/20x20@2/drawer.png</file>
-        <file>icons/kraken/20x20@3/drawer.png</file>
-        <file>icons/kraken/20x20@4/drawer.png</file>
         <file>MarketPage.qml</file>
-        <file>icons/kraken/20x20/next.png</file>
-        <file>icons/kraken/20x20@2/next.png</file>
-        <file>icons/kraken/20x20@3/next.png</file>
-        <file>icons/kraken/20x20@4/next.png</file>
         <file>styleSettingPage.qml</file>
-        <file>icons/kraken/20x20/back.png</file>
-        <file>icons/kraken/20x20@2/back.png</file>
-        <file>icons/kraken/20x20@3/back.png</file>
-        <file>icons/kraken/20x20@4/back.png</file>
         <file>refrestSettingPage.qml</file>
+        <file>icons/kraken/36x36/back.png</file>
+        <file>icons/kraken/36x36/menu.png</file>
+        <file>icons/kraken/36x36/next.png</file>
+        <file>icons/kraken/36x36/refresh.png</file>
+        <file>icons/kraken/36x36/down.png</file>
+        <file>icons/kraken/36x36/up.png</file>
     </qresource>
 </RCC>

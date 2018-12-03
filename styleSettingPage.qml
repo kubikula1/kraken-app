@@ -20,6 +20,7 @@ Pane {
 
     ListView {
         id: list
+        interactive: false
         width: parent.width
         height: parent.height
         model: availableStyles
@@ -45,7 +46,7 @@ Pane {
             id: label
             opacity: list.stl !== settings.style ? 1 : 0
             anchors.bottom:  parent.bottom
-            height: 50
+            height: 80
             text: "Restart required"
             color: "#e41e25"
             anchors.left: parent.left

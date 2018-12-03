@@ -33,7 +33,7 @@ ApplicationWindow {
             spacing:20
 
             ToolButton {
-                icon.name: "back"
+                icon.source:"qrc:/icons/kraken/36x36/back.png"
                 opacity: stackView.depth > 1 ? 1 : 0
                 onClicked: {
                     stackView.pop()
@@ -44,7 +44,7 @@ ApplicationWindow {
             Label {
                 id: titleLabel
                 text: mainWindow.tit
-                font.pixelSize: 20
+                font.pixelSize: 28
                 elide: Label.ElideRight
                 horizontalAlignment: Qt.AlignHCenter
                 verticalAlignment: Qt.AlignVCenter
@@ -54,7 +54,7 @@ ApplicationWindow {
 
 
             ToolButton {
-                icon.name: "menu"
+                icon.source: "qrc:/icons/kraken/36x36/menu.png"
                 onClicked: {
                     optionsMenu.open()
                 }
@@ -74,6 +74,7 @@ ApplicationWindow {
     }
 
     StackView {
+
         id: stackView
         anchors.fill: parent
         focus: true
@@ -92,20 +93,9 @@ ApplicationWindow {
                     mainWindow.tit = currentItem.tit
                 }
 
-                Item {
+
+                MarketPage {
                     id: marketPage
-                    property string tit: "Market"
-
-                    Label {
-                        id: xxx
-                        text: "Market"
-                        font.pixelSize: 20
-                        elide: Label.ElideRight
-
-                        horizontalAlignment: Qt.AlignHCenter
-                        verticalAlignment: Qt.AlignVCenter
-                        Layout.fillWidth: true
-                    }
                 }
 
                 Item {
@@ -115,6 +105,7 @@ ApplicationWindow {
 
                     ListView {
                         id: list
+                        interactive: false
                         Layout.fillWidth: true
                         Layout.fillHeight: true
 
@@ -131,16 +122,13 @@ ApplicationWindow {
                                 width: parent.width
                                 MouseArea {
                                     anchors.fill: parent
-                                        onClicked:{
-                                            stackView.push(model.source)
-                                            mainWindow.tit = model.title
-                                        }
+                                    onClicked: stackView.push(model.source)
                                 }
                                 Image {
                                     anchors.right: parent.right
                                     anchors.rightMargin: 15
                                     anchors.verticalCenter: parent.verticalCenter
-                                    source: "qrc:/icons/kraken/20x20/next.png"
+                                    source: "qrc:/icons/kraken/36x36/next.png"
                                 }
                             }
                         }
@@ -174,10 +162,10 @@ ApplicationWindow {
 
             Label {
                 width: aboutDialog.availableWidth
-                text: "Tato aplikae vznikla jako školní projekt do předmětu Mobilní technologie na fakultě informatiky ve Zlíně. "
+                text: "Tato aplikace vznikla jako školní projekt do předmětu Mobilní technologie na fakultě informatiky ve Zlíně. "
                       +"Jedná se o aplikaci zobrazující data z crypto burzy Kraken"
                 wrapMode: Label.Wrap
-                font.pixelSize: 12
+                font.pixelSize: 14
                 horizontalAlignment: Label.AlignJustify
                 verticalAlignment: Label.AlignJustify
             }
@@ -188,8 +176,9 @@ ApplicationWindow {
                     + "Můžou být účtovány poplatky za datový provoz dle váší smlouvy s operátorem.\n\n"
                     + "Autor nenese žádnou odpovědnost za škody vzniklé  použiváním této aplikace"
                 wrapMode: Label.Wrap
-                font.pixelSize: 12
+                font.pixelSize: 14
             }
         }
     }
 }
+
