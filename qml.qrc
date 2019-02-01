@@ -12,5 +12,6 @@
         <file>icons/kraken/36x36/refresh.png</file>
         <file>icons/kraken/36x36/down.png</file>
         <file>icons/kraken/36x36/up.png</file>
+        <file>curencyPage.qml</file>
     </qresource>
 </RCC>

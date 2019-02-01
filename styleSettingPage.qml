@@ -23,7 +23,10 @@ Pane {
         interactive: false
         width: parent.width
         height: parent.height
-        model: availableStyles
+        model: ListModel {
+            ListElement { data: "Default"; }
+            ListElement { data: "Material"; }
+        }
         property string stl
         Component.onCompleted: {
             stl = settings.style

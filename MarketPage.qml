@@ -39,117 +39,130 @@ Item {
     }
 
 
-
-    RowLayout {
+    StackView {
+        id: stack
         anchors.fill: parent
-        spacing:20
-
-        Label {
-            anchors.top: parent.top
-            anchors.topMargin: 15
-            anchors.left: parent.left
-            anchors.leftMargin: 15
-            id: lastUpdateTxt
-            text: "Updated: " + marketPage.time + " sec(s) ago"
-            elide: Label.ElideRight
-            Layout.fillWidth: true
-        }
+        focus: true
+        Keys.onReleased: if (event.key === Qt.Key_Back && stackView.depth > 1) {
+                             stackView.pop();
+                             event.accepted = true;
+                         }
+        initialItem: Item {
 
 
-        BusyIndicator {
-           id: busyIndication
-           running: false
-           anchors.horizontalCenter: parent.horizontalCenter
-           anchors.verticalCenter: parent.verticalCenter
-        }
+            RowLayout {
+                anchors.fill: parent
+                spacing:20
+
+                Label {
+                    anchors.top: parent.top
+                    anchors.topMargin: 15
+                    anchors.left: parent.left
+                    anchors.leftMargin: 15
+                    id: lastUpdateTxt
+                    text: "Updated: " + marketPage.time + " sec(s) ago"
+                    elide: Label.ElideRight
+                    Layout.fillWidth: true
+                }
 
 
-        ToolButton {
-            id: refreshBtn
-            anchors.right: parent.right
-            anchors.rightMargin: 15
-            anchors.top:  parent.top
-            icon.source: "qrc:/icons/kraken/36x36/refresh.png"
-            opacity: !busyIndication.running
-            onClicked:   {
-                busyIndication.running = true
-                getData()
+                BusyIndicator {
+                   id: busyIndication
+                   running: false
+                   anchors.horizontalCenter: parent.horizontalCenter
+                   anchors.verticalCenter: parent.verticalCenter
+                }
+
+
+                ToolButton {
+                    id: refreshBtn
+                    anchors.right: parent.right
+                    anchors.rightMargin: 15
+                    anchors.top:  parent.top
+                    icon.source: "qrc:/icons/kraken/36x36/refresh.png"
+                    opacity: !busyIndication.running
+                    onClicked:   {
+                        busyIndication.running = true
+                        getData()
+                    }
+                }
             }
-        }
-    }
 
-    Label {
-        anchors.top: marketPage.top
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.topMargin: 50
-        visible: marketPage.errorMsg !== undefined
-        text: marketPage.errorMsg
-    }
+            Label {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.topMargin: 50
+                visible: marketPage.errorMsg !== undefined
+                text: marketPage.errorMsg
+            }
 
-    ListModel {
-        id: model
-    }
+            ListModel {
+                id: model
+            }
 
-    ListView {
-        id: listview
-        interactive: false
-        anchors.fill: parent
-        anchors.topMargin: 80
-        model: model
-        delegate:Component {
-            id: modelData
-            ItemDelegate {
-                width: parent.width
-                Item{
-                    anchors.topMargin: 15
-                    //anchors.verticalCenter: parent.verticalCenter
-                    anchors.fill: parent
+            ListView {
+                id: listview
+                interactive: false
+                anchors.fill: parent
+                anchors.topMargin: 80
+                model: model
+                delegate:Component {
+                    id: modelData
+                    ItemDelegate {
+                        width: parent.width
+                        Item{
 
-                    anchors.leftMargin: 10
-                    anchors.left: parent.left
-                    Label{
-                        text: curency
+                            anchors.topMargin: 15
+                            //anchors.verticalCenter: parent.verticalCenter
+                            anchors.fill: parent
+
+                            anchors.leftMargin: 10
+                            anchors.left: parent.left
+                            Label{
+                                id: xxx;
+                                text: curency
+                            }
+                        }
+                        Item {
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.fill: parent
+                            anchors.topMargin: 15
+
+                            anchors.leftMargin: 80
+                            anchors.left: parent.left
+                            Label {
+                                text: value
+                            }
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: stack.push("qrc:/curencyPage.qml")
+                        }
+                        Image {
+                            anchors.right: parent.right
+                            anchors.rightMargin: 10
+                            anchors.verticalCenter: parent.verticalCenter
+                            source: "qrc:/icons/kraken/36x36/next.png"
+                        }
+                        Item {
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.fill: parent
+                            anchors.left: parent.left
+                            anchors.leftMargin:  220
+                            anchors.topMargin: 15
+
+                            Label {
+                                text: variace + " %"
+                            }
+                        }
+
+                        Image {
+                            anchors.right: parent.right
+                            anchors.rightMargin: 50
+                            anchors.verticalCenter: parent.verticalCenter
+                            source: variace > 0 ?   "qrc:/icons/kraken/36x36/up.png" :"qrc:/icons/kraken/36x36/down.png"
+                        }
                     }
-                }
-                Item {
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.fill: parent
-                    anchors.topMargin: 15
-
-                    anchors.leftMargin: 80
-                    anchors.left: parent.left
-                    Label {
-                        text: value
-                    }
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    //onClicked: stackView.push(model.source)
-                }
-                Image {
-                    anchors.right: parent.right
-                    anchors.rightMargin: 10
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/icons/kraken/36x36/next.png"
-                }
-                Item {
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.fill: parent
-                    anchors.left: parent.left
-                    anchors.leftMargin:  220
-                    anchors.topMargin: 15
-
-                    Label {
-                        text: variace + " %"
-                    }
-                }
-
-                Image {
-                    anchors.right: parent.right
-                    anchors.rightMargin: 50
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: variace > 0 ?   "qrc:/icons/kraken/36x36/up.png" :"qrc:/icons/kraken/36x36/down.png"
                 }
             }
         }
@@ -169,7 +182,7 @@ Item {
                     updateTimeout.stop()
                     listview.model.clear()
                     for (var prop in parsedData.result) {
-                        var percent =100- (parsedData.result[prop].a[0]/parsedData.result[prop].o)*100
+                        var percent = 100- (parsedData.result[prop].a[0]/parsedData.result[prop].o)*100
                         percent = percent.toFixed(2)
                         console.log(percent)
                         listview.model.append({curency: prop, value:parsedData.result[prop].a[0], variace: percent})
