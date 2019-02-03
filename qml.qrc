@@ -3,7 +3,6 @@
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
         <file>icons/kraken/index.theme</file>
-        <file>MarketPage.qml</file>
         <file>styleSettingPage.qml</file>
         <file>refrestSettingPage.qml</file>
         <file>icons/kraken/36x36/back.png</file>
