@@ -121,19 +121,19 @@ Item {
                     for (var prop in parsedData.result) {
                         var pom = parsedData.result[prop].a[0];
                         pom = parseFloat(pom)
-                        low_value.text = pom.toFixed(2)
+                        low_value.text = pom.toFixed(5)
 
                         pom = parsedData.result[prop].h[0];
                         pom = parseFloat(pom)
-                        high_value.text = pom.toFixed(2)
+                        high_value.text = pom.toFixed(5)
 
                         pom = parsedData.result[prop].o;
                         pom = parseFloat(pom)
-                        open_value.text = pom.toFixed(2)
+                        open_value.text = pom.toFixed(5)
 
                         pom = parsedData.result[prop].v[0];
                         pom = parseFloat(pom)
-                        volume_value.text = pom.toFixed(2)
+                        volume_value.text = pom.toFixed(5)
                      }
                 } else {
                     // problem s komunikaci
